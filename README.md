@@ -28,6 +28,7 @@ Table:
 Picture:
 ![Picture](picture.jpg)
 
+vhdl code:
 ```vhdl
 and, or, nand, nor
 ```
