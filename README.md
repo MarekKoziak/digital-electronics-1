@@ -8,13 +8,13 @@
 Emphesis: *italic*, **bold**
 
 List: **Ordered**
-        1. Miroslav
-        2. Michal
-        3. Ivan
+1. Miroslav
+2. Michal
+3. Ivan
       **Unordered**
-        - Miroslav
-        - Michal
-        - Ivan
+- Miroslav
+- Michal
+- Ivan
 
 Link to [random video](https://www.youtube.com/watch?v=w0AOGeqOnFY)
 
