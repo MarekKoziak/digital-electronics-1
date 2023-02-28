@@ -54,5 +54,16 @@ begin uut_mux_3bit_4to1 : entity work.mux_3bit_4to1
             f_o     => s_f
         );
 
+p_stimulus : process
+    begin
+        report "Stimulus process started";
+
+	s_a <= "001"; s_b <= "010"; s_c <= "100"; s_d <= "111"; s_sel <= "00"; wait for 100 ns;
+    s_a <= "001"; s_b <= "010"; s_c <= "100"; s_d <= "111"; s_sel <= "01"; wait for 100 ns;
+    s_a <= "001"; s_b <= "010"; s_c <= "100"; s_d <= "111"; s_sel <= "10"; wait for 100 ns;
+    s_a <= "001"; s_b <= "010"; s_c <= "100"; s_d <= "111"; s_sel <= "11"; wait for 100 ns;	
+    	report "Stimulus process finished";
+        wait;    
+end process p_stimulus;
 
 end architecture testbench;
