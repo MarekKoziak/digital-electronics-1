@@ -19,10 +19,13 @@ architecture testbench of tb_ff_rst is
     signal sig_clk_100MHz : std_logic;
     signal sig_rst        : std_logic;
     signal sig_data       : std_logic;
+    signal sig_data2       : std_logic;
     signal sig_dq         : std_logic;
     signal sig_dq_bar     : std_logic;
     signal sig_tq         : std_logic;
     signal sig_tq_bar     : std_logic;
+    signal sig_jkq         : std_logic;
+    signal sig_jkq_bar     : std_logic;
 
 begin
     -- Connecting testbench signals with d_ff_rst entity
@@ -45,13 +48,23 @@ begin
             q     => sig_tq,
             q_bar => sig_tq_bar
         );
+        
+        uut_jk_ff_rst : entity work.jk_ff_rst
+        port map (
+            clk   => sig_clk_100MHz,
+            rst   => sig_rst,
+            j     => sig_data,
+            k     => sig_data2,
+            q     => sig_jkq,
+            q_bar => sig_jkq_bar
+        );
 
     --------------------------------------------------------
     -- Clock generation process
     --------------------------------------------------------
     p_clk_gen : process
     begin
-        while now < 300 ns loop -- 30 periods of 100MHz clock
+        while now < 200 ns loop -- 30 periods of 100MHz clock
             sig_clk_100MHz <= '0';
             wait for c_CLK_100MHZ_PERIOD / 2;
             sig_clk_100MHz <= '1';
@@ -70,7 +83,7 @@ begin
         -- ACTIVATE AND DEACTIVATE RESET HERE
         wait for 50 ns;
         sig_rst <= '1';
-        wait for 150 ns;
+        wait for 70 ns;
         sig_rst <= '0';
 
         wait;
@@ -84,11 +97,13 @@ begin
         report "Stimulus process started";
 
         -- DEFINE YOUR INPUT DATA HERE
-        sig_data <='0'; wait for 13 ns;
-        sig_data <='1'; wait for 57 ns;
-        sig_data <='0'; wait for 80 ns;
-        sig_data <='1'; wait for 100 ns;
-        sig_data <='0';
+        sig_data <='0'; sig_data2 <='0'; wait for 13 ns;
+        sig_data <='1'; sig_data2 <='0'; wait for 47 ns;
+        sig_data <='0'; sig_data2 <='1'; wait for 40 ns;
+        sig_data <='1'; sig_data2 <='1'; wait for 20 ns;
+        sig_data <='0'; sig_data2 <='1'; wait for 30 ns;
+        sig_data <='1'; sig_data2 <='1'; wait for 20 ns;
+        sig_data <='1'; sig_data2 <='0';
 
         report "Stimulus process finished";
         wait;
