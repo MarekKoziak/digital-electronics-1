@@ -85,7 +85,7 @@ begin
       -- FOR IMPLEMENTATION, CALCULATE VALUE: 250 ms / (1/100 MHz)
       -- 1   @ 10 ns
       -- ??? @ 250 ms
-      g_MAX => 25000000
+      g_MAX => 1
     )
     port map (
       clk => clk,
@@ -103,86 +103,62 @@ begin
   begin
 
     if (rising_edge(clk)) then
-      if (rst = '1') then                    -- Synchronous reset
-        sig_state <= WEST_STOP;              -- Init state
-        sig_cnt   <= c_ZERO;                 -- Clear delay counter
+      if (rst = '1') then                    
+        sig_state <= WEST_STOP;              
+        sig_cnt   <= c_ZERO;                 
       elsif (sig_en = '1') then
-        -- Every 250 ms, CASE checks the value of sig_state
-        -- local signal and changes to the next state 
-        -- according to the delay value.
         case sig_state is
 
           when WEST_STOP =>
-            -- Count to 2 secs
             if (sig_cnt < c_DELAY_2SEC) then
               sig_cnt <= sig_cnt + 1;
             else
-              -- Move to the next state
               sig_state <= WEST_GO;
-              -- Reset local counter value
               sig_cnt <= c_ZERO;
             end if;
             
           when WEST_GO =>
-            -- WRITE OTHER STATES 
               if (sig_cnt < c_DELAY_4SEC) then
               sig_cnt <= sig_cnt + 1;
             else
-              -- Move to the next state
               sig_state <= WEST_WAIT;
-              -- Reset local counter value
               sig_cnt <= c_ZERO;
             end if;
 
           when WEST_WAIT =>
-            -- WRITE OTHER STATES HERE
             if (sig_cnt < c_DELAY_1SEC) then
               sig_cnt <= sig_cnt + 1;
             else
-              -- Move to the next state
               sig_state <= SOUTH_STOP;
-              -- Reset local counter value
               sig_cnt <= c_ZERO;
             end if;
             
           when SOUTH_STOP =>
-            -- Count to 2 secs
             if (sig_cnt < c_DELAY_2SEC) then
               sig_cnt <= sig_cnt + 1;
             else
-              -- Move to the next state
               sig_state <= SOUTH_GO;
-              -- Reset local counter value
               sig_cnt <= c_ZERO;
             end if;
 
           when SOUTH_GO =>
-            -- WRITE OTHER STATE
             if (sig_cnt < c_DELAY_4SEC) then
               sig_cnt <= sig_cnt + 1;
             else
-              -- Move to the next state
               sig_state <= SOUTH_WAIT;
-              -- Reset local counter value
               sig_cnt <= c_ZERO;
             end if;
             
           when SOUTH_WAIT =>
-            -- Count to 2 secs
             if (sig_cnt < c_DELAY_1SEC) then
               sig_cnt <= sig_cnt + 1;
             else
-              -- Move to the next state
               sig_state <= WEST_STOP;
-              -- Reset local counter value
               sig_cnt <= c_ZERO;
             end if;
 
 
           when others =>
-            -- It is a good programming practice to use the
-            -- OTHERS clause, even if all CASE choices have
-            -- been made.
             sig_state <= WEST_STOP;
             sig_cnt   <= c_ZERO;
 
