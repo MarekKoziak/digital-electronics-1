@@ -56,7 +56,7 @@ begin
   begin
 
     if rising_edge(clk) then
-      if (rst = '1') then           -- Synchronous reset
+      if (rst = '1' or sig_cnt = "10100") then           -- Synchronous reset
         sig_cnt <= (others => '0'); -- Clear all bits
       elsif (en = '1') then         -- Test if counter is enabled
       

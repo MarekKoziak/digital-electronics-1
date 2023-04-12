@@ -21,6 +21,7 @@
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use ieee.numeric_std.all;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -33,7 +34,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity vysielac is
     Port ( 
-        znak : in std_logic_vector (11 downto 0);
+        output : out std_logic_vector (1 downto 0);
         button : in std_logic;
         
         clk : in std_logic;
@@ -47,6 +48,9 @@ architecture Behavioral of vysielac is
   -- Internal clock enable
   signal sig_en_10ms : std_logic;
   signal sig_cnt_5bit : std_logic_vector (4 downto 0);
+  signal sig_count_0 : unsigned (4 downto 0);
+  signal sig_count_1 : unsigned (4 downto 0);
+  constant c_DELAY_200ms : unsigned(4 downto 0) := "10100";
   
   begin
   --------------------------------------------------------
@@ -72,9 +76,23 @@ architecture Behavioral of vysielac is
       clk     => clk,
       rst     => rst,
       en      => sig_en_10ms,
-      cnt_up  => '0',
+      cnt_up  => '1',
       cnt     => sig_cnt_5bit
     );
 
+signal_transmitng : process (clk) is
+    begin
+        if (rising_edge(clk)) then
+            if (rst = '1') then          
+                sig_count_1 <= (others => '0');
+                sig_count_0 <= (others => '0');
+            elsif(ce = 1) then
+                if (cnt < c_DELAY_200ms) then                    
+                    if (button = 1) then 
+                        sig_count_1 <= sig_count_1 + 1;
+                    elsif(button = 0) then
+                        sig_count_0 <= sig_count_0 + 0;
+      
+    end process signal_transmitng;
 
 end Behavioral;
