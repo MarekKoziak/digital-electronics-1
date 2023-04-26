@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date: 04/12/2023 12:41:05 PM
+-- Create Date: 25.04.2023 19:42:39
 -- Design Name: 
--- Module Name: transmiter - Behavioral
+-- Module Name: tb_transmiter - Behavioral
 -- Project Name: 
 -- Target Devices: 
 -- Tool Versions: 
@@ -31,20 +31,36 @@ use IEEE.STD_LOGIC_1164.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity morse_transmitter is
-    Port ( button : in  STD_LOGIC;
-           signal_morse_code : out  STD_LOGIC
-          );
-end morse_transmitter;
+entity tb_transmiter is
+--  Port ( );
+end tb_transmiter;
 
-architecture Behavioral of morse_transmitter is
+architecture Behavioral of tb_transmiter is
+
+    signal sig_button : std_logic;
+    signal sig_signal_out : std_logic;
+
+begin
+
+    transmiter : entity work.morse_transmitter 
+        port map (
+            button => sig_button,
+            signal_out => sig_signal_out
+        );
+
+
+    p_transmiter : process is
     begin
-        process(button)
-    begin
-        if (button = '1') then
-            signal_morse_code <= '1';
-        else
-            signal_morse_code <= '0';
-        end if;
-    end process;
+        wait for 10 ms;
+        sig_button <= '1';
+        wait for 300 ms;
+        sig_button <= '0';
+        wait for 300 ms;
+        sig_button <= '1';
+        wait for 300 ms;
+        sig_button <= '0';
+        wait;
+    end process p_transmiter ;
+
+
 end Behavioral;

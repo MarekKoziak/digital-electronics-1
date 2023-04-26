@@ -31,20 +31,37 @@ use IEEE.STD_LOGIC_1164.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity morse_transmitter is
-    Port ( button : in  STD_LOGIC;
-           signal_morse_code : out  STD_LOGIC
-          );
-end morse_transmitter;
+entity transmiter is
+    Port ( 
+        output : out std_logic_vector (1 downto 0);
+        button : in std_logic;
+        
+        clk : in std_logic;
+        rst : std_logic
+        
+    );
+end transmiter;
 
-architecture Behavioral of morse_transmitter is
-    begin
-        process(button)
-    begin
-        if (button = '1') then
-            signal_morse_code <= '1';
-        else
-            signal_morse_code <= '0';
-        end if;
-    end process;
+architecture Behavioral of transmiter is
+
+signal sig_en_10ms : std_logic;
+
+begin
+
+clk_en0 : entity work.clock_enable
+    generic map (
+
+      g_MAX => 1000000
+    )
+    port map (
+      clk => clk,
+      rst => rst,
+      ce  => sig_en_10ms
+    );
+    
+ signal_transmitng : process (clk) is
+     begin
+        if (ce)
+     end process signal_transmitng;
+
 end Behavioral;
