@@ -87,15 +87,6 @@ architecture Behavioral of Translater_t is
     
 begin
 
-    transmiter : entity work.morse_reader_t  
-        port map (
-            signal_morse_code => signal_morse_code,
-            
-            morse_code_symbol => morse_code_symbol,
-            input_idle => input_idle,
-            clk => clk,
-            rst => rst,   
-            button => button 
-        );
+    
 
 end Behavioral;

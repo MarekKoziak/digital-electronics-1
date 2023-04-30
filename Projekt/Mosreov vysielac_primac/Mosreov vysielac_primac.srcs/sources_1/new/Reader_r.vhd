@@ -38,9 +38,7 @@ entity morse_reader_r is
            input_idle : out std_logic;
            
            clk : in std_logic;
-           rst : in std_logic;
-           
-           input : in std_logic
+           rst : in std_logic
            );   
                           
 end morse_reader_r;
@@ -62,12 +60,6 @@ architecture Behavioral of morse_reader_r  is
             clk => clk,
             rst => rst,
             ce  => sig_en_10ms
-        );
-        
-    reciever : entity work.morse_receiver 
-        port map (
-            signal_morse_code => signal_morse_code,
-            input => input
         );
         
     process_read : process (clk) is

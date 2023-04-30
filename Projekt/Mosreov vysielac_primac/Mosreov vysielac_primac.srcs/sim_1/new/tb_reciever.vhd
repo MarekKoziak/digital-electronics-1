@@ -36,94 +36,29 @@ entity tb_reciever is
 end tb_reciever;
 
 architecture Behavioral of tb_reciever is
-
-    constant c_CLK_100MHZ_PERIOD : time    := 10 ns;
-
-    signal sig_signal_in : std_logic;
-    signal sig_output_symbol : std_logic;
-    signal sig_clk : std_logic;
-    signal sig_rst : std_logic;   
-
+    signal sig_input : std_logic;
+    signal sig_signal_morse_code : std_logic;
 begin
 
     reciever : entity work.morse_receiver 
         port map (
-            signal_in => sig_signal_in,
-            output_symbol => sig_output_symbol,
-            clk => sig_clk,
-            rst => sig_rst
+            input => sig_input,
+            signal_morse_code => sig_signal_morse_code
         );
         
-        p_clk_gen : process is
-  begin
-
-    while now < 3000 ms loop             -- 75 periods of 100MHz clock
-
-      sig_clk <= '0';
-      wait for c_CLK_100MHZ_PERIOD / 2;
-      sig_clk <= '1';
-      wait for c_CLK_100MHZ_PERIOD / 2;
-
-    end loop;
-    wait;                               -- Process is suspended forever
-
-  end process p_clk_gen;
-
-        p_reciever : process
-  begin
-  
-    sig_signal_in <= '0';
-    wait for 10 ms;
-    
-    sig_signal_in <= '1';
-    wait for 50 ms;
-    
-    sig_rst <= '1';
-    wait for 100ms;
-    sig_rst <= '0';
-    
-    sig_signal_in <= '0';
-    wait for 50 ms;
-    
-    sig_signal_in <= '1';
-    wait for 100 ms;
-    
-    sig_signal_in <= '0';
-    wait for 50 ms;
-    
-    sig_signal_in <= '1';
-    wait for 30 ms;
-    
-    sig_signal_in <= '1';
-    wait for 300 ms;
-    
-    sig_signal_in <= '0';
-    wait for 200 ms;
-    
-    sig_signal_in <= '1';
-    wait for 100 ms;
-    
-    sig_signal_in <= '0';
-    wait for 50 ms;
-    
-    sig_signal_in <= '1';
-    wait for 100 ms;
-    
-    sig_signal_in <= '0';
-    wait for 50 ms;
-    
-    sig_signal_in <= '1';
-    wait for 5 ms;
-    
-    sig_signal_in <= '1';
-    wait for 20 ms;
-    
-    sig_signal_in <= '1';
-    wait for 500 ms;
-    
-    sig_signal_in <= '0';    
-    wait;
-    
-  end process;
+    p_reciever : process is 
+    begin
+        sig_input <= '0';
+        wait for 20ms;
+        sig_input <= '1';
+        wait for 100ms;
+        sig_input <= '0';
+        wait for 50ms;
+        sig_input <= '1';
+        wait for 300ms;
+        sig_input <= '0';
+        wait for 20ms;
+        
+    end process; 
 
 end Behavioral;

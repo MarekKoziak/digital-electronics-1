@@ -50,7 +50,7 @@ architecture Behavioral of morse_reader_t  is
     signal sig_en_10ms : std_logic;
     signal signal_count_HIGH : integer;
     signal signal_count_LOW : integer;
-
+    
   begin
 
     clk_en0 : entity work.clock_enable
@@ -62,13 +62,7 @@ architecture Behavioral of morse_reader_t  is
             clk => clk,
             rst => rst,
             ce  => sig_en_10ms
-        );
-        
-    transmiter : entity work.morse_transmitter 
-        port map (
-            signal_morse_code => signal_morse_code,
-            button => button 
-        );
+        );       
            
     process_read : process (clk) is
     begin
