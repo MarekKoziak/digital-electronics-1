@@ -38,9 +38,7 @@ entity morse_reader_t is
            input_idle : out std_logic;
            
            clk : in std_logic;
-           rst : in std_logic;
-           
-           button : in std_logic
+           rst : in std_logic
            );   
              
 end morse_reader_t;
@@ -81,7 +79,7 @@ architecture Behavioral of morse_reader_t  is
         end if;
     
 
-        if (falling_edge(signal_morse_code )) then
+        if (signal_morse_code = '0') then
             if (signal_count_HIGH > 0) then
                 if (signal_count_HIGH < 20) then 
                     morse_code_symbol <= '0';

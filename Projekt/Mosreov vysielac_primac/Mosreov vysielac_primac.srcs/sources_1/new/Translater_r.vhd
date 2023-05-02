@@ -31,16 +31,18 @@ use IEEE.STD_LOGIC_1164.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity Translater_t is
+entity Translater_r is
     Port ( morse_alphabet_letter : out character;
     
            signal_morse_code : in  std_logic;
            morse_code_symbol : in std_logic;
-           input_idle : in std_logic
+           input_idle : in std_logic;
+           
+           sig : out std_logic_vector (9 downto 0)
            );
-end Translater_t;
+end Translater_r;
 
-architecture Behavioral of Translater_t is
+architecture Behavioral of Translater_r is
     constant DOT : std_logic_vector (1 downto 0) := "00";
     constant DASH : std_logic_vector (1 downto 0) := "11";
     constant SPACE : std_logic_vector (1 downto 0) := "10";
@@ -82,7 +84,7 @@ architecture Behavioral of Translater_t is
     constant EIGHT : std_logic_vector(9 downto 0) := DASH & DASH & DASH & DOT & DOT;
     constant NINE  : std_logic_vector(9 downto 0) := DASH & DASH & DASH & DASH & DOT;
     
-    signal morse_code_letter : std_logic_vector (9 downto 0);
+    signal morse_code_letter : std_logic_vector (9 downto 0) := "1010101010";
     
 begin
 
@@ -98,11 +100,11 @@ begin
             morse_code_letter(4) <= morse_code_letter(2);
             morse_code_letter(3) <= morse_code_letter(1);
             morse_code_letter(2) <= morse_code_letter(0);
-            morse_code_letter(1) <= morse_code_symbol;
-            morse_code_letter(0) <= morse_code_symbol;
-                 
+            morse_code_letter(1) <= signal_morse_code;
+            morse_code_letter(0) <= signal_morse_code;
         end if;
-            
+        
+        sig <= morse_code_letter;
     end process;
     
     p_translate : process (input_idle) is
@@ -116,7 +118,7 @@ begin
                 when FOUR => morse_alphabet_letter <= '4';
                 when FIVE => morse_alphabet_letter <= '5';
                 when SIX => morse_alphabet_letter <= '6';
-                when SEVEN => morse_alphabet_letter <= '7';
+                when SEVEN => morse_alphabet_letter <= '9';
                 when EIGHT => morse_alphabet_letter <= '9';
                 when NINE => morse_alphabet_letter <= '9';
                 when A => morse_alphabet_letter <= 'A';

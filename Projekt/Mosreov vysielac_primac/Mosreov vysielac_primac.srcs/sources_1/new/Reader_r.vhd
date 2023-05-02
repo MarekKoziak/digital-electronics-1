@@ -79,7 +79,7 @@ architecture Behavioral of morse_reader_r  is
         end if;
     
 
-        if (falling_edge(signal_morse_code )) then
+        if (signal_morse_code = '0') then
             if (signal_count_HIGH > 0) then
                 if (signal_count_HIGH < 20) then 
                     morse_code_symbol <= '0';
