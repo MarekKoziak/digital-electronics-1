@@ -77,7 +77,7 @@ process_read : process (clk) is
     end process;
    ```
   Tento modul čte data, která přicházejí z tlačítka používané uživatalem a rozpoznává, jestli je na vstupu čárka nebo tečka.
-  ![testbench reciever](https://user-images.githubusercontent.com/124773189/235714979-1fd64dcf-fe9d-457f-9590-126826809882.png)
+  ![testbench reciever](./Images/reader_testbench.png)
   
 - Reader_r
   

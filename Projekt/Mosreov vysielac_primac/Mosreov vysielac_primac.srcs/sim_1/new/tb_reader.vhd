@@ -59,7 +59,7 @@ begin
         p_clk_gen : process is
   begin
 
-    while now < 3000 ms loop             -- 75 periods of 100MHz clock
+    while now < 4000 ms loop             -- 75 periods of 100MHz clock
 
       sig_clk <= '0';
       wait for c_CLK_100MHZ_PERIOD / 2;
@@ -115,15 +115,21 @@ begin
     wait for 50 ms;
     
     sig_signal_morse_code <= '1';
-    wait for 5 ms;
+    wait for 250 ms;
+    
+    sig_signal_morse_code <= '0';
+    wait for 150 ms;
     
     sig_signal_morse_code <= '1';
-    wait for 20 ms;
-    
-    sig_signal_morse_code <= '1';
-    wait for 500 ms;
+    wait for 350 ms;
     
     sig_signal_morse_code <= '0';    
+    wait for 600ms;
+    
+    sig_signal_morse_code  <= '1';
+    wait for 250ms;
+    
+    sig_signal_morse_code <= '0';
     wait;
     
   end process;

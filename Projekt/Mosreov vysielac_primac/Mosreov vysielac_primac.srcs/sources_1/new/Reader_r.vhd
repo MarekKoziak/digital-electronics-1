@@ -71,6 +71,7 @@ architecture Behavioral of morse_reader_r  is
             else if (sig_en_10ms = '1') then
                 if (signal_morse_code  = '1') then
                     signal_count_HIGH <= signal_count_HIGH + 1;
+                    signal_count_LOW <= 0;
                 else 
                     signal_count_LOW <= signal_count_LOW + 1;
                 end if;
@@ -90,14 +91,13 @@ architecture Behavioral of morse_reader_r  is
                 end if;
             end if;   
                 signal_count_HIGH <= 0;
-                signal_count_LOW <= 0;
          end if;
         
     end process;
     
     process_idle : process (signal_count_LOW)
     begin
-        if (signal_count_LOW > 100) then
+        if (signal_count_LOW > 40) then
             input_idle <= '1';
         else
             input_idle <= '0';
